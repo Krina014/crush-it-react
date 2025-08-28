@@ -65,53 +65,30 @@ const BusinessCardBuilder = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-40">
-        <div className="container mx-auto px-6 py-4">
+      {/* Header Bar */}
+      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-40 shadow-sm">
+        <div className="px-6 py-4">
           <div className="flex items-center justify-between">
+            <h1 className="font-bold text-xl text-foreground">Leo Business Cards</h1>
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h1 className="font-bold text-xl">Leo Business Cards</h1>
-                <p className="text-sm text-muted-foreground">AI-Powered Professional Cards</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <Button variant="outline" size="sm">
-                <Share className="w-4 h-4 mr-2" />
-                Share
+              <Button className="bg-gradient-primary hover:opacity-90 text-white border-0">
+                <Sparkles className="w-4 h-4 mr-2" />
+                Build
               </Button>
-              <Button variant="outline" size="sm">
-                <Download className="w-4 h-4 mr-2" />
-                Preview
+              <Button variant="outline">
+                <Train className="w-4 h-4 mr-2" />
+                Train
               </Button>
-              <Badge variant="secondary" className="bg-orange-secondary text-orange-primary">
-                Card Preview
-              </Badge>
+              <Button variant="outline">
+                <TrendingUp className="w-4 h-4 mr-2" />
+                Improve
+              </Button>
             </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex items-center gap-2 mt-4">
-            <Button size="sm" className="bg-gradient-primary hover:opacity-90 text-white border-0">
-              <Sparkles className="w-4 h-4 mr-2" />
-              Build
-            </Button>
-            <Button variant="outline" size="sm">
-              <Train className="w-4 h-4 mr-2" />
-              Train
-            </Button>
-            <Button variant="outline" size="sm">
-              <TrendingUp className="w-4 h-4 mr-2" />
-              Improve
-            </Button>
           </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-6 py-8">
+      <div className="px-6 py-8">
         <div className="grid lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
           {/* Form Section */}
           <div className="space-y-6">
@@ -198,11 +175,15 @@ const BusinessCardBuilder = () => {
                         <Textarea
                           id="bio"
                           value={cardData.bio}
-                          onChange={(e) => updateCardData('bio', e.target.value)}
+                          onChange={(e) => {
+                            if (e.target.value.length <= 500) {
+                              updateCardData('bio', e.target.value)
+                            }
+                          }}
                           className="min-h-[100px] transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                           placeholder="Tell people about yourself and what you do..."
                         />
-                        <p className="text-xs text-muted-foreground">
+                        <p className={`text-xs ${cardData.bio.length > 450 ? 'text-destructive' : 'text-muted-foreground'}`}>
                           {cardData.bio.length}/500 characters
                         </p>
                       </div>
